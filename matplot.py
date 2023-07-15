@@ -3,7 +3,6 @@ import csv
 import sys
 import matplotlib.pyplot as plt
 
-
 def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
     # Plot the duration distribution using a histogram
     durations = []
@@ -21,10 +20,23 @@ def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
 
     filtered_durations = [duration for duration in durations if duration <= 60]
 
-    plt.hist(filtered_durations, bins=range(0, 61, 5), edgecolor='none')
+    # Set custom color and edgecolor
+    plt.hist(filtered_durations, bins=range(10, 61, 1), edgecolor='white', color='#1f77b4', alpha=0.8, rwidth=0.8)
     plt.title(TITLE)
     plt.xlabel(X_LABEL)
     plt.ylabel(Y_LABEL)
+
+
+    # Add a background color
+    plt.gca().set_facecolor('#f2f2f2')
+
+    # Adjust spacing
+    plt.tight_layout()
+
+    # # Save the plot as an image file
+    # plt.savefig('video_durations.png', dpi=300)
+
+    # Show the plot
     plt.show()
 
 
