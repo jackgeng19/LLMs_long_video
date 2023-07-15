@@ -20,23 +20,22 @@ def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
 
     filtered_durations = [duration for duration in durations if duration <= 60]
 
-    # Set custom color and edgecolor
     plt.hist(filtered_durations, bins=range(10, 61, 1), edgecolor='white', color='#1f77b4', alpha=0.8, rwidth=0.8)
-    plt.title(TITLE)
+    plt.title(TITLE, fontweight='bold')
     plt.xlabel(X_LABEL)
     plt.ylabel(Y_LABEL)
-
-
-    # Add a background color
     plt.gca().set_facecolor('#f2f2f2')
 
-    # Adjust spacing
+    counts, bins, _ = plt.hist(filtered_durations, bins=range(10, 61, 1), edgecolor='white', color='#1f77b4', alpha=0.8, rwidth=0.8)
+    top_counts_indices = (-counts).argsort()[:2]  # Get indices of top two counts
+    for index in top_counts_indices:
+        count = int(counts[index])
+        bin_value = bins[index] + 0.5
+        plt.annotate(f'{count}', xy=(bin_value, count), xytext=(0, 10), textcoords='offset points',
+                     ha='center', va='bottom')
+
     plt.tight_layout()
-
-    # # Save the plot as an image file
     # plt.savefig('video_durations.png', dpi=300)
-
-    # Show the plot
     plt.show()
 
 
