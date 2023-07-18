@@ -3,6 +3,9 @@ import csv
 import sys
 import matplotlib.pyplot as plt
 
+# (for videos that are longer >10min) Analyze the distribution videos; qualitatively inspect the quality ASR in YT-1B; 
+# investigate these better ASR transcription models (whisper)
+
 def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
     # Plot the duration distribution using a histogram
     durations = []
