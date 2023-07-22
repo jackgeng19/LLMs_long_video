@@ -38,7 +38,7 @@ def generate_plot(PATH, TITLE):
     ax.set_ylabel('Count')
 
     # Add total count of videos to the upper right corner
-    ax.text(0.95, 0.95, f'Total Videos: {len(durations)}',
+    ax.text(0.95, 0.95, f'Total Count of Videos Longer than 10 Mins: {len(durations)}',
             horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
 
     # Use mplcursors to enable tooltips on the bar chart
@@ -51,7 +51,7 @@ def generate_plot(PATH, TITLE):
 
 def main() -> int:
     generate_plot('/Users/jackgengqc/Desktop/Dr.Gedas/output',
-                  'Distribution of Video Durations (YT-1B Dataset)')
+                  'Distribution of Video(>10mins) Durations (YT-1B Dataset)')
     return 0
 
 
