@@ -3,9 +3,6 @@ import csv
 import sys
 import matplotlib.pyplot as plt
 
-# (for videos that are longer >10min) Analyze the distribution videos; qualitatively inspect the quality ASR in YT-1B; 
-# investigate these better ASR transcription models (whisper)
-
 def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
     # Plot the duration distribution using a histogram
     durations = []
@@ -19,35 +16,29 @@ def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
                 next(reader)  # Skip the header row
                 for row in reader:
                     duration = int(row[1])
-                    if duration >= 60:
+                    if duration >= 600:
                         durations.append(duration)
 
     if len(durations) >= 2:
         durations.sort(reverse=True)
         second_max_duration = durations[1]
         print("Second maximum duration:", second_max_duration)
+
     # Set custom color and edgecolor
-    plt.hist(durations, bins=range(600, 1250, 10), edgecolor='None', color='#1f77b4', alpha=0.8, rwidth=0.8)
+    plt.hist(durations, bins=range(600, 1260, 10), edgecolor='white', color='#1f77b4', alpha=0.8, rwidth=0.8)
     plt.title(TITLE, fontweight='bold')
     plt.xlabel(X_LABEL)
     plt.ylabel(Y_LABEL)
 
-
     # Add a background color
     plt.gca().set_facecolor('#f2f2f2')
 
+    # Add total count of videos to the upper right corner
+    plt.text(0.95, 0.95, f'Total Videos longer than 10 mins: {len(durations)}',
+             horizontalalignment='right', verticalalignment='center', transform=plt.gca().transAxes)
 
-    # counts, bins, _ = plt.hist(filtered_durations, bins=range(10, 61, 1), edgecolor='white', color='#1f77b4', alpha=0.8, rwidth=0.8)
-    # top_counts_indices = (-counts).argsort()[:2]  # Get indices of top two counts
-    # for index in top_counts_indices:
-    #     count = int(counts[index])
-    #     bin_value = bins[index] + 0.5
-    #     plt.annotate(f'{count}', xy=(bin_value, count), xytext=(0, 10), textcoords='offset points',
-    #                  ha='center', va='bottom')
-        
     # Adjust spacing
     plt.tight_layout()
-    # plt.savefig('video_durations.png', dpi=300)
     plt.show()
 
 
