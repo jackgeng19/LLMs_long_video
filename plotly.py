@@ -27,11 +27,11 @@ def generate_plot(PATH, TITLE):
         print("Second maximum duration:", second_max_duration)
 
     # Calculate histogram data
-    hist_data, edges = np.histogram(durations, bins=range(600, 1260, 100))
+    hist_data, edges = np.histogram(durations, bins=range(600, 1260, 50))
 
     # Create bar chart using matplotlib
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.bar([f"{edge}" for edge in edges[:-1]], hist_data, edgecolor='white', color='#1f77b4', alpha=0.8, width=1)
+    ax.bar([f"{edge}-{edge+49}" for edge in edges[:-1]], hist_data, edgecolor='white', color='#1f77b4', alpha=0.8, width=1)
 
     ax.set_title(TITLE, fontweight='bold')
     ax.set_xlabel('Duration (seconds)')
