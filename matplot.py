@@ -27,7 +27,7 @@ def generate_plot(PATH, TITLE, X_LABEL, Y_LABEL):
         second_max_duration = durations[1]
         print("Second maximum duration:", second_max_duration)
     # Set custom color and edgecolor
-    plt.hist(durations, bins=range(60, 1250, 10), edgecolor='None', color='#1f77b4', alpha=0.8, rwidth=0.8)
+    plt.hist(durations, bins=range(600, 1250, 10), edgecolor='None', color='#1f77b4', alpha=0.8, rwidth=0.8)
     plt.title(TITLE, fontweight='bold')
     plt.xlabel(X_LABEL)
     plt.ylabel(Y_LABEL)
