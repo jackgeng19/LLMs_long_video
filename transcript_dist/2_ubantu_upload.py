@@ -54,6 +54,13 @@ for batch_start in range(513, 1025, batch_size):
                     # Skip videos with duration < 300 seconds
                     if len (words_per_30s) < 20 or duration < 600:
                         continue
+
+                    # Possible solution:
+                    # Find delta between each 30s and 1.  std of these deltas 2. mean of these deltas (lower mean means a less sparse transcript)
+                    # to see whether the speaker is speaking in a constant speed(pace).
+
+            
+
                     std_deviation = np.std(words_per_30s)
 
                     if std_deviation >= 20:
