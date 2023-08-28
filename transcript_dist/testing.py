@@ -28,25 +28,23 @@ with open(unzipped_file_name, 'r') as json_file:
         writer = csv.writer(csv_file)
 
         # Write the header row in the CSV file
-        writer.writerow(['URL', 'Duration(second)','Standard Deviation'])
 
         # Process each line in the JSONL file
         for line in json_file:
             data = json.loads(line)
-            link = data["webpage_url"]
-            duration = data["duration"]
+            subtitles_t_start = data["_subtitles_t_start"]
+            subtitles_t_end = data["_subtitles_t_end"]
+            # Calculate time deltas between consecutive words
+            time_deltas = [end - start for start, end in zip(subtitles_t_start[:-1], subtitles_t_end[1:])]
 
-            words_per_30s = data["_words_per_30s"]
-            # Skip videos with duration < 300 seconds
-            if len (words_per_30s) < 20 or duration < 600:
-                continue
-            std_deviation = np.std(words_per_30s)
+            # Calculate the mean of the time deltas
+            mean_time_delta = sum(time_deltas) / len(time_deltas)
 
-            if std_deviation >= 20:
-                continue
+            # if mean_time_delta >= 20:
+            #     continue
 
-            # Write the data row in the CSV file
-            writer.writerow([link, duration, std_deviation])
+            print(mean_time_delta)
+
     os.remove(unzipped_file_name)
 
 # Output progress after processing each batch
