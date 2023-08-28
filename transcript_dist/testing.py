@@ -30,12 +30,12 @@ with open(unzipped_file_name, 'r') as json_file:
         # Write the header row in the CSV file
         writer = csv.writer(csv_file)
 
-        writer.writerow(['ID', 'Duration', 'Delta * 1000'])
+        writer.writerow(['url', 'Duration', 'Delta * 1000'])
 
         # Process each line in the JSONL file
         for line in json_file:
             data = json.loads(line)
-            id_value = data['id']
+            id_value = data['webpage_url']
             duration = data["duration"]
 
             if duration < 600:
@@ -50,7 +50,7 @@ with open(unzipped_file_name, 'r') as json_file:
 
 
 
-            writer.writerow([id_value, duration, mean_time_delta * 1000])            
+            writer.writerow([id_value, duration, mean_time_delta])            
 
     os.remove(unzipped_file_name)
 
