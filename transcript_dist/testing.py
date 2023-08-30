@@ -40,6 +40,7 @@ with open(unzipped_file_name, 'r') as json_file:
 
             if duration < 600:
                 continue
+
             subtitles_t_start = data["subtitles_t_start"]
             subtitles_t_end = data["subtitles_t_end"]
             # Calculate time deltas between consecutive words
@@ -47,8 +48,6 @@ with open(unzipped_file_name, 'r') as json_file:
 
             # Calculate the mean of the time deltas
             mean_time_delta = np.mean(time_deltas)
-
-
 
             writer.writerow([id_value, duration, mean_time_delta])            
 
