@@ -8,9 +8,9 @@ import numpy as np
 # Iterate over the range of file numbers (0000 to 1023) in batches
 file_number_str = "0000"
 
-# input_file_name = f"./..shanw25/data/YT1B/metadata/yttemporal1b_train_{file_number_str}of1024.jsonl.gz"
+input_file_name = f"./..shanw25/data/YT1B/metadata/yttemporal1b_train_{file_number_str}of1024.jsonl.gz"
 
-input_file_name = "/Users/jackgengqc/code/appteam/academy/VideoQA-Generation/transcript_dist/yttemporal1b_train_0000of1024.jsonl.gz"
+# input_file_name = "/Users/jackgengqc/code/appteam/academy/VideoQA-Generation/transcript_dist/yttemporal1b_train_0000of1024.jsonl.gz"
 
 # Build the temporary unzipped file name
 unzipped_file_name = f"./yttemporal1b_train_{file_number_str}of1024.jsonl"
