@@ -10,7 +10,7 @@ batch_size = 10
 total_rows_added = 0
 
 # Iterate over the range of file numbers (0000 to 1023) in batches
-for batch_start in range(513, 1025, batch_size):
+for batch_start in range(0, 10, batch_size):
     batch_end = batch_start + batch_size
 
     # Process the current batch of files
@@ -35,40 +35,35 @@ for batch_start in range(513, 1025, batch_size):
 
             # Open the CSV file for writing
             with open(output_file_name, 'w', newline='') as csv_file:
-                # writer = csv.writer(csv_file)
-
                 # Write the header row in the CSV file
-                # writer.writerow(['URL', 'Duration(second)','Standard Deviation'])
+                writer = csv.writer(csv_file)
+
+                writer.writerow(['url', 'Duration', 'Delta * 1000'])
 
                 # Process each line in the JSONL file
                 for line in json_file:
                     data = json.loads(line)
-                    link = data["webpage_url"]
+                    id_value = data['webpage_url']
                     duration = data["duration"]
 
-                    try:
-                        words_per_30s = data["_words_per_30s"]
-                    except KeyError:
-                        continue  # Skip this entry if "_words_per_30s" is missing
-
-                    # Skip videos with duration < 300 seconds
-                    if len (words_per_30s) < 20 or duration < 600:
+                    if duration < 600:
                         continue
 
-                    # Possible solution:
-                    # Find delta between each 30s and 1.  std of these deltas 2. mean of these deltas (lower mean means a less sparse transcript)
-                    # to see whether the speaker is speaking in a constant speed(pace).
+                    subtitles_t_start = data["subtitles_t_start"]
+                    subtitles_t_end = data["subtitles_t_end"]
+                    # Calculate time deltas between consecutive words
+                    time_deltas = [start - end for start, end in zip(subtitles_t_start[1:], subtitles_t_end[:-1])]
 
-            
+                    # Calculate the mean of the time deltas
+                    mean_time_delta = np.mean(time_deltas)
 
-                    std_deviation = np.std(words_per_30s)
-
-                    if std_deviation >= 20:
+                    if mean_time_delta >= 0.0014:
                         continue
-                    
+
                     total_rows_added += 1
-                    # Write the data row in the CSV file
-                    # writer.writerow([link, duration, std_deviation])
+
+                    writer.writerow([id_value, duration, mean_time_delta])  
+
         os.remove(unzipped_file_name)
 
     # Output progress after processing each batch

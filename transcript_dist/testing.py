@@ -30,7 +30,7 @@ with open(unzipped_file_name, 'r') as json_file:
         # Write the header row in the CSV file
         writer = csv.writer(csv_file)
 
-        writer.writerow(['url', 'Duration', 'Delta * 1000'])
+        writer.writerow(['url', 'Duration', 'Delta'])
 
         # Process each line in the JSONL file
         for line in json_file:
@@ -48,6 +48,9 @@ with open(unzipped_file_name, 'r') as json_file:
 
             # Calculate the mean of the time deltas
             mean_time_delta = np.mean(time_deltas)
+            
+            if mean_time_delta >= 0.0014:
+                continue
 
             writer.writerow([id_value, duration, mean_time_delta])            
 
