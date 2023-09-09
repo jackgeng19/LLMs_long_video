@@ -57,7 +57,7 @@ for batch_start in range(0, 10, batch_size):
                     # Calculate the mean of the time deltas
                     mean_time_delta = np.mean(time_deltas)
 
-                    if mean_time_delta >= 0.0014:
+                    if mean_time_delta > 0.001665:
                         continue
 
                     total_rows_added += 1
