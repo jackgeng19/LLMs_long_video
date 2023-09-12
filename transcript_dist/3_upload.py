@@ -10,7 +10,7 @@ batch_size = 10
 total_rows_added = 0
 
 # Iterate over the range of file numbers (0000 to 1023) in batches
-for batch_start in range(0, 512, batch_size):
+for batch_start in range(512, 1024, batch_size):
     batch_end = batch_start + batch_size
 
     # Process the current batch of files
@@ -38,7 +38,7 @@ for batch_start in range(0, 512, batch_size):
                 # Write the header row in the CSV file
                 writer = csv.writer(csv_file)
 
-                writer.writerow(['url', 'Duration', 'Delta'])
+                writer.writerow(['url', 'Duration', 'Delta * 1000'])
 
                 # Process each line in the JSONL file
                 for line in json_file:
