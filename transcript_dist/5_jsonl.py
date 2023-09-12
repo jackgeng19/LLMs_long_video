@@ -8,7 +8,7 @@ batch_size = 10
 total_rows_added = 0
 
 # Iterate over the range of file numbers (0000 to 1023) in batches
-for batch_start in range(0, 512, batch_size):
+for batch_start in range(512, 1023, batch_size):
     batch_end = batch_start + batch_size
 
     # Process the current batch of files
