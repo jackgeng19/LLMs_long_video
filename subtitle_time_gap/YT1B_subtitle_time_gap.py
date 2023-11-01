@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ** CHANGE MINS THRESHOLD HERE ** #
-minute_limit = 5
+minute_limit = 10
 numb_of_interval = 100
 batch_size = 10
 
@@ -12,12 +12,12 @@ batch_size = 10
 def is_non_speaking_subtitle(subtitle):
     return subtitle.startswith('[') and subtitle.endswith(']')
 
-def load_and_process_data(input_file_name, total, minute):
+def load_and_process_data(input_file_name, minute):
     mean_time_deltas = []
 
     with gzip.open(input_file_name, 'rt') as input_file:  # Adjusted for gzip
         for line in input_file:
-            total += 1
+            # total += 1
             data = json.loads(line)
             duration = data["duration"]
             if duration < minute * 60:
@@ -78,7 +78,7 @@ def plot_cumulative_distribution(interval_count, mean_time_deltas, min_val, max_
     return total_videos
 
 all_mean_time_deltas = []
-total_amount = 0
+# total_amount = 0
 
 for batch_start in range(0, 1024, batch_size):
     batch_end = batch_start + batch_size
@@ -87,7 +87,7 @@ for batch_start in range(0, 1024, batch_size):
         file_number_str = f"{file_number:04d}"
         input_file_name = f"./../../shanw25/data/YT1B/metadata/yttemporal1b_train_{file_number_str}of1024.jsonl.gz"
 
-        current_file_mean_time_deltas = load_and_process_data(input_file_name, total_amount, minute_limit)
+        current_file_mean_time_deltas = load_and_process_data(input_file_name, minute_limit)
         all_mean_time_deltas.extend(current_file_mean_time_deltas)
 
         # Output progress after processing each file
@@ -101,4 +101,4 @@ print("All files processed..")
 min_val = min(all_mean_time_deltas)
 max_val = 0.7
 filtered_amount = plot_cumulative_distribution(numb_of_interval, all_mean_time_deltas, min_val, max_val, minute_limit)
-print(f"Total amount videos are {filtered_amount} / {total_amount}.")
+print(f"Total amount videos are {filtered_amount}.")
